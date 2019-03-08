@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/9cc
+9cc.so
+9cc.dylib
+9cc.dll
+9cc.a
+9cc.lib
+9cc-test-*
+*.exe
+*.o
+*.obj
+*.lst

@@ -1,0 +1,9 @@
+{
+	"authors": [
+		"Hiroki Noda"
+	],
+	"copyright": "Copyright © 2019, Hiroki Noda",
+	"description": "C Compiler",
+	"license": "BSL-1.0",
+	"name": "9cc"
+}
