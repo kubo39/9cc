@@ -22,7 +22,7 @@ void tokenizer(const(char)* p)
 
         if (*p == '+')
         {
-            tokens[i].value = TOK.PLUS;
+            tokens[i].value = TOK.ADD;
             tokens[i].ptr = p;
             i++;
             p++;
@@ -30,7 +30,23 @@ void tokenizer(const(char)* p)
         }
         else if (*p == '-')
         {
-            tokens[i].value = TOK.MINUS;
+            tokens[i].value = TOK.MIN;
+            tokens[i].ptr = p;
+            i++;
+            p++;
+            continue;
+        }
+        else if (*p == '*')
+        {
+            tokens[i].value = TOK.MUL;
+            tokens[i].ptr = p;
+            i++;
+            p++;
+            continue;
+        }
+        else if (*p == '/')
+        {
+            tokens[i].value = TOK.DIV;
             tokens[i].ptr = p;
             i++;
             p++;

@@ -9,4 +9,4 @@ test: build
 	./test.sh
 
 clean:
-	$(RM) cc tmp*
+	$(RM) 9cc tmp*
