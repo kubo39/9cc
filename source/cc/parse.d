@@ -157,6 +157,7 @@ class Parser
                 error("開き括弧に対応する閉じ括弧がありません");
                 fatal();
             }
+            nextToken();
             return e;
         }
 

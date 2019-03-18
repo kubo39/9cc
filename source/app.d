@@ -2,7 +2,6 @@ import core.stdc.stdio;
 import core.stdc.stdlib;
 
 import cc.errors;
-//import cc.memory;
 import cc.parse;
 import cc.tokens;
 import cc.visitor;

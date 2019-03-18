@@ -20,7 +20,14 @@ class Visitor
 
     void visit(UnaryExp e)
     {
-        if (e.e1.op == TOK.NUM)
+        assert(e.e1);
+
+        if (e.e1.op == TOK.UNARY)
+        {
+            (cast(UnaryExp) e.e1).accept(this);
+            return;
+        }
+        else if (e.e1.op == TOK.NUM)
         {
             (cast(IntegerExp) e.e1).accept(this);
             return;
@@ -58,6 +65,9 @@ class Visitor
 
     void visit(MulExp e)
     {
+        assert(e.e1);
+        assert(e.e2);
+
         if (e.e1.op == TOK.UNARY)
         {
             (cast(UnaryExp)e.e1).accept(this);
@@ -118,6 +128,9 @@ class Visitor
 
     void visit(DivExp e)
     {
+        assert(e.e1);
+        assert(e.e2);
+
         if (e.e1.op == TOK.UNARY)
         {
             (cast(UnaryExp)e.e1).accept(this);
