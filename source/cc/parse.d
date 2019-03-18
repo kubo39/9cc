@@ -8,7 +8,7 @@ import cc.visitor;
 Expression parse(const(char)* input)
 {
     tokenizer(input);
-    auto parser = new Parser(input);
+    auto parser = new Parser();
     return parser.parse();
 }
 
@@ -132,11 +132,10 @@ class Parser
     Token token;
     size_t pos;
 
-    this(const(char)* input)
+    this()
     {
         this.pos = 0;
         this.token = tokens[this.pos];
-        this.p = input;
     }
 
     void nextToken()

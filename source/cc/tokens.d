@@ -15,6 +15,7 @@ enum TOK
 
 struct Token
 {
+    Token* next;
     const(char)* ptr;
     TOK value;
     long intvalue; // signed

@@ -6,12 +6,19 @@ import core.stdc.stdlib;
 
 import cc.tokens;
 
-// FIXME(kubo39)
-__gshared Token[100] tokens;
+__gshared Token* tokens;
+
+// Returns a newly allocated Token.
+Token* allocateToken()
+{
+    return new Token();
+}
 
 void tokenizer(const(char)* p)
 {
-    int i = 0;
+    tokens = allocateToken();
+    Token* token = tokens;
+
     while (*p)
     {
         if (isspace(*p))
@@ -21,64 +28,64 @@ void tokenizer(const(char)* p)
         }
         else if (*p == '+')
         {
-            tokens[i].value = TOK.ADD;
-            tokens[i].ptr = p;
-            i++;
+            token.value = TOK.ADD;
+            token.ptr = p;
+            token = token.next = allocateToken();
             p++;
             continue;
         }
         else if (*p == '-')
         {
-            tokens[i].value = TOK.MIN;
-            tokens[i].ptr = p;
-            i++;
+            token.value = TOK.MIN;
+            token.ptr = p;
+            token = token.next = allocateToken();
             p++;
             continue;
         }
         else if (*p == '*')
         {
-            tokens[i].value = TOK.MUL;
-            tokens[i].ptr = p;
-            i++;
+            token.value = TOK.MUL;
+            token.ptr = p;
+            token = token.next = allocateToken();
             p++;
             continue;
         }
         else if (*p == '/')
         {
-            tokens[i].value = TOK.DIV;
-            tokens[i].ptr = p;
-            i++;
+            token.value = TOK.DIV;
+            token.ptr = p;
+            token = token.next = allocateToken();
             p++;
             continue;
         }
         else if (*p == '(')
         {
-            tokens[i].value = TOK.LEFTPARENT;
-            tokens[i].ptr = p;
-            i++;
+            token.value = TOK.LEFTPARENT;
+            token.ptr = p;
+            token = token.next = allocateToken();
             p++;
             continue;
         }
         else if (*p == ')')
         {
-            tokens[i].value = TOK.RIGHTPARENT;
-            tokens[i].ptr = p;
-            i++;
+            token.value = TOK.RIGHTPARENT;
+            token.ptr = p;
+            token = token.next = allocateToken();
             p++;
             continue;
         }
         else if (isdigit(*p))
         {
-            tokens[i].value = TOK.NUM;
-            tokens[i].ptr = p;
-            tokens[i].intvalue = strtol(p, &p, 10);
-            i++;
+            token.value = TOK.NUM;
+            token.ptr = p;
+            token.intvalue = strtol(p, &p, 10);
+            token = token.next = allocateToken();
             continue;
         }
 
         fprintf(stderr, "トークナイズできません: %s\n", *p);
         exit(EXIT_FAILURE);
     }
-    tokens[i].value = TOK.EOF;
-    tokens[i].ptr = p;
+    token.value = TOK.EOF;
+    token.ptr = p;
 }
