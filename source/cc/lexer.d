@@ -19,8 +19,7 @@ void tokenizer(const(char)* p)
             p++;
             continue;
         }
-
-        if (*p == '+')
+        else if (*p == '+')
         {
             tokens[i].value = TOK.ADD;
             tokens[i].ptr = p;
@@ -52,8 +51,23 @@ void tokenizer(const(char)* p)
             p++;
             continue;
         }
-
-        if (isdigit(*p))
+        else if (*p == '(')
+        {
+            tokens[i].value = TOK.LEFTPARENT;
+            tokens[i].ptr = p;
+            i++;
+            p++;
+            continue;
+        }
+        else if (*p == ')')
+        {
+            tokens[i].value = TOK.RIGHTPARENT;
+            tokens[i].ptr = p;
+            i++;
+            p++;
+            continue;
+        }
+        else if (isdigit(*p))
         {
             tokens[i].value = TOK.NUM;
             tokens[i].ptr = p;

@@ -35,6 +35,18 @@ class Visitor
             (cast(MinExp) e.e1).accept(this);
             return;
         }
+        else if (e.e1.op == TOK.MUL)
+        {
+            (cast(MulExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.DIV)
+        {
+            (cast(DivExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.NUM)
+        {
+            (cast(IntegerExp) e.e1).accept(this);
+        }
         assert(false);
     }
 
@@ -50,11 +62,51 @@ class Visitor
         {
             (cast(UnaryExp)e.e1).accept(this);
         }
+        else if (e.e1.op == TOK.ADD)
+        {
+            (cast(AddExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.MIN)
+        {
+            (cast(MinExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.MUL)
+        {
+            (cast(MulExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.DIV)
+        {
+            (cast(DivExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.NUM)
+        {
+            (cast(IntegerExp) e.e1).accept(this);
+        }
         else assert (false);
 
         if (e.e2.op == TOK.UNARY)
         {
             (cast(UnaryExp)e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.ADD)
+        {
+            (cast(AddExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.MIN)
+        {
+            (cast(MinExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.MUL)
+        {
+            (cast(MulExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.DIV)
+        {
+            (cast(DivExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.NUM)
+        {
+            (cast(IntegerExp) e.e2).accept(this);
         }
         else assert (false);
 
@@ -70,11 +122,51 @@ class Visitor
         {
             (cast(UnaryExp)e.e1).accept(this);
         }
+        else if (e.e1.op == TOK.ADD)
+        {
+            (cast(AddExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.MIN)
+        {
+            (cast(MinExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.MUL)
+        {
+            (cast(MulExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.DIV)
+        {
+            (cast(DivExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.NUM)
+        {
+            (cast(IntegerExp) e.e1).accept(this);
+        }
         else assert (false);
 
         if (e.e2.op == TOK.UNARY)
         {
             (cast(UnaryExp)e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.ADD)
+        {
+            (cast(AddExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.MIN)
+        {
+            (cast(MinExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.MUL)
+        {
+            (cast(MulExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.DIV)
+        {
+            (cast(DivExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.NUM)
+        {
+            (cast(IntegerExp) e.e2).accept(this);
         }
         else assert (false);
 
