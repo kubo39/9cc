@@ -316,7 +316,6 @@ class Visitor
     void visit(AssignExp e)
     {
         assert(e.e1);
-        assert(e.e2);
 
         // lvalue
         // if (e.e1.op)
@@ -346,6 +345,5 @@ class Visitor
         {
             (cast(IntegerExp) e.e2).accept(this);
         }
-        else assert(false);
     }
 }
