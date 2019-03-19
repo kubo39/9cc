@@ -74,6 +74,14 @@ void tokenizer(const(char)* p)
             p++;
             continue;
         }
+        else if (*p == '=')
+        {
+            token.value = TOK.ASSIGN;
+            token.ptr = p;
+            token = token.next = allocateToken();
+            p++;
+            continue;
+        }
         else if ('a' <= *p && *p <= 'z')
         {
             token.value = TOK.IDENT;

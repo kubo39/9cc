@@ -10,7 +10,8 @@ enum TOK
     MIN,
     MUL,
     DIV,
-    UNARY, // FIXME
+    UNARY,
+    ASSIGN,
     EOF,
 }
 

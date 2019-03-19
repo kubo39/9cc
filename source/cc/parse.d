@@ -126,6 +126,20 @@ final class MinExp : BinExp
     }
 }
 
+final class AssignExp : BinExp
+{
+    this(Expression e1, Expression e2)
+    {
+        super(TOK.ASSIGN, e1, e2);
+    }
+
+    override void accept(Visitor v)
+    {
+        v.visit(this);
+    }
+}
+
+
 class Parser
 {
     const(char)* p;
@@ -224,8 +238,25 @@ class Parser
         return e;
     }
 
+    Expression parseAssignExp()
+    {
+        auto e = parseAddExp();
+        switch (token.value)
+        {
+        case TOK.ASSIGN:
+            nextToken();
+            auto e2 = parseAssignExp();
+            e = new AssignExp(e, e2);
+            break;
+        default:
+            break;
+        }
+        assert(e);
+        return e;
+    }
+
     Expression parse()
     {
-        return parseAddExp();
+        return parseAssignExp();
     }
 }

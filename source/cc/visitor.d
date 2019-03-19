@@ -312,4 +312,40 @@ class Visitor
         printf("  sub rax, rdi\n");
         printf("  push rax\n");
     }
+
+    void visit(AssignExp e)
+    {
+        assert(e.e1);
+        assert(e.e2);
+
+        // lvalue
+        // if (e.e1.op)
+
+        // rvalue
+        if (e.e2.op == TOK.UNARY)
+        {
+            (cast(UnaryExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.ADD)
+        {
+            (cast(AddExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.MIN)
+        {
+            (cast(MinExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.MUL)
+        {
+            (cast(MulExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.DIV)
+        {
+            (cast(DivExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.NUM)
+        {
+            (cast(IntegerExp) e.e2).accept(this);
+        }
+        else assert(false);
+    }
 }
