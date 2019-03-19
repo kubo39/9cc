@@ -5,14 +5,19 @@ import cc.lexer;
 import cc.tokens;
 import cc.visitor;
 
-Expression parse(const(char)* input)
+ASTNode parse(const(char)* input)
 {
     tokenizer(input);
     auto parser = new Parser();
     return parser.parse();
 }
 
-abstract class Expression
+abstract class ASTNode
+{
+    abstract void accept(Visitor v);
+}
+
+abstract class Expression : ASTNode
 {
     TOK op;
 
@@ -21,7 +26,10 @@ abstract class Expression
         this.op = op;
     }
 
-    void accept(Visitor v);
+    override void accept(Visitor v)
+    {
+        v.visit(this);
+    }
 }
 
 final class IntegerExp : Expression
@@ -139,23 +147,44 @@ final class AssignExp : BinExp
     }
 }
 
+abstract class Statement : ASTNode
+{
+    override void accept(Visitor v)
+    {
+        v.visit(this);
+    }
+}
+
+class ExpStatement : Statement
+{
+    Expression exp;
+
+    this(Expression exp)
+    {
+        this.exp = exp;
+    }
+
+    override void accept(Visitor v)
+    {
+        v.visit(this);
+    }
+}
+
 
 class Parser
 {
     const(char)* p;
-    Token token;
+    Token* token;
     size_t pos;
 
     this()
     {
-        this.pos = 0;
-        this.token = tokens[this.pos];
+        this.token = tokens;
     }
 
     void nextToken()
     {
-        this.pos++;
-        this.token = tokens[this.pos];
+        this.token = this.token.next;
     }
 
     Expression parseUnaryExp()

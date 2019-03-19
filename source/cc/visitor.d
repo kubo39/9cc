@@ -318,7 +318,7 @@ class Visitor
         assert(e.e1);
 
         // lvalue
-        // if (e.e1.op)
+        // if (e.e1.op == TOK.ADD)
 
         // rvalue
         if (e.e2.op == TOK.UNARY)
@@ -345,5 +345,15 @@ class Visitor
         {
             (cast(IntegerExp) e.e2).accept(this);
         }
+    }
+
+    void visit(Statement st)
+    {
+        assert(false);
+    }
+
+    void visit(ExpStatement st)
+    {
+        assert(false);
     }
 }

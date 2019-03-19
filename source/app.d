@@ -6,13 +6,13 @@ import cc.parse;
 import cc.tokens;
 import cc.visitor;
 
-void gen(Expression exp)
+void gen(ASTNode node)
 {
     printf(".intel_syntax noprefix\n");
     printf(".global main\n");
     printf("main:\n");
 
-    exp.accept(new Visitor());
+    node.accept(new Visitor());
 
     printf("  pop rax\n");
     printf("  ret\n");
@@ -26,8 +26,8 @@ extern (C) int main(size_t argc, const(char)** argv)
         fatal();
     }
 
-    auto exp = parse(argv[1]);
-    gen(exp);
+    auto node = parse(argv[1]);
+    gen(node);
 
     return EXIT_SUCCESS;
 }
