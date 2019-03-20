@@ -5,7 +5,7 @@ import cc.lexer;
 import cc.tokens;
 import cc.visitor;
 
-ASTNode parse(const(char)* input)
+ASTNode[] parse(const(char)* input)
 {
     tokenizer(input);
     auto parser = new Parser();
@@ -301,9 +301,35 @@ class Parser
         return s;
     }
 
-    ASTNode parse()
+    Statement[] parseStatement()
     {
-//        return parseAssignExp();
-        return parseExpStatement();
+        Statement[] statements;
+        while (true)
+        {
+            switch (token.value)
+            {
+            case TOK.SEMICOLON:
+                nextToken();
+                break;
+            case TOK.LEFTPARENT:
+            case TOK.RIGHTPARENT:
+            case TOK.IDENT:
+            case TOK.NUM:
+            case TOK.UNARY:
+            case TOK.ASSIGN:
+                statements ~= parseExpStatement();
+                break;
+            case TOK.EOF:
+                return statements;
+            default:
+                assert(false);
+            }
+        }
+        assert(false);
+    }
+
+    ASTNode[] parse()
+    {
+        return cast(ASTNode[]) parseStatement();
     }
 }

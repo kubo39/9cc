@@ -6,13 +6,14 @@ import cc.parse;
 import cc.tokens;
 import cc.visitor;
 
-void gen(ASTNode node)
+void gen(ASTNode[] nodes)
 {
     printf(".intel_syntax noprefix\n");
     printf(".global main\n");
     printf("main:\n");
 
-    node.accept(new Visitor());
+    foreach (node; nodes)
+        node.accept(new Visitor());
 
     printf("  pop rax\n");
     printf("  ret\n");
@@ -26,8 +27,8 @@ extern (C) int main(size_t argc, const(char)** argv)
         fatal();
     }
 
-    auto node = parse(argv[1]);
-    gen(node);
+    auto nodes = parse(argv[1]);
+    gen(nodes);
 
     return EXIT_SUCCESS;
 }
