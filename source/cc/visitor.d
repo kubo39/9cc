@@ -315,10 +315,38 @@ class Visitor
 
     void visit(AssignExp e)
     {
+        assert(e);
         assert(e.e1);
 
         // lvalue
-        // if (e.e1.op == TOK.ADD)
+        if (e.e1.op == TOK.UNARY)
+        {
+            (cast(UnaryExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.ADD)
+        {
+            (cast(AddExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.MIN)
+        {
+            (cast(MinExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.MUL)
+        {
+            (cast(MulExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.DIV)
+        {
+            (cast(DivExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.NUM)
+        {
+            (cast(IntegerExp) e.e1).accept(this);
+        }
+        else assert(false);
+
+        // rvalue
+        if (!e.e2) return;
 
         // rvalue
         if (e.e2.op == TOK.UNARY)
@@ -347,13 +375,14 @@ class Visitor
         }
     }
 
-    void visit(Statement st)
+    void visit(Statement s)
     {
         assert(false);
     }
 
-    void visit(ExpStatement st)
+    void visit(ExpStatement s)
     {
-        assert(false);
+        assert(s.exp);
+        (cast(AssignExp) s.exp).accept(this);
     }
 }

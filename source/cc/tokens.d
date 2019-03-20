@@ -5,6 +5,7 @@ enum TOK
     NUM = 256,  // 整数トークン
     LEFTPARENT,
     RIGHTPARENT,
+    SEMICOLON,
     IDENT,
     ADD,
     MIN,

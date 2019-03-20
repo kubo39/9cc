@@ -269,23 +269,41 @@ class Parser
 
     Expression parseAssignExp()
     {
-        auto e = parseAddExp();
+        Expression e1, e2;
+        e1 = parseAddExp();
         switch (token.value)
         {
         case TOK.ASSIGN:
             nextToken();
-            auto e2 = parseAssignExp();
-            e = new AssignExp(e, e2);
+            e2 = parseAssignExp();
             break;
         default:
             break;
         }
+        auto e = new AssignExp(e1, e2);
         assert(e);
         return e;
     }
 
-    Expression parse()
+    Statement parseExpStatement()
     {
-        return parseAssignExp();
+        Statement s;
+        auto e = parseAssignExp();
+        switch (token.value)
+        {
+        case TOK.SEMICOLON:
+            nextToken();
+            goto default;
+        default:
+            s = new ExpStatement(e);
+            break;
+        }
+        return s;
+    }
+
+    ASTNode parse()
+    {
+//        return parseAssignExp();
+        return parseExpStatement();
     }
 }

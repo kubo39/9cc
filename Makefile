@@ -9,4 +9,5 @@ test: build
 	./test.sh
 
 clean:
+	dub clean
 	$(RM) 9cc tmp*
