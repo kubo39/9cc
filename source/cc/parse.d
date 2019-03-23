@@ -1,6 +1,7 @@
 module cc.parse;
 
 import cc.errors;
+import cc.identifier;
 import cc.lexer;
 import cc.tokens;
 import cc.visitor;
@@ -40,6 +41,22 @@ final class IntegerExp : Expression
     {
         super(TOK.NUM);
         this.value = intvalue;
+    }
+
+    override void accept(Visitor v)
+    {
+        v.visit(this);
+    }
+}
+
+final class IdentifierExp : Expression
+{
+    Identifier id;
+
+    this(Identifier id)
+    {
+        super(TOK.IDENT);
+        this.id = id;
     }
 
     override void accept(Visitor v)
@@ -190,8 +207,9 @@ class Parser
     Expression parseUnaryExp()
     {
         Expression e;
-        if (token.value == TOK.LEFTPARENT)
+        switch (token.value)
         {
+        case TOK.LEFTPARENT:
             nextToken();
             e = parseAddExp();
             if (token.value != TOK.RIGHTPARENT)
@@ -200,20 +218,23 @@ class Parser
                 fatal();
             }
             nextToken();
-            return e;
-        }
-
-        if (token.value == TOK.NUM)
-        {
+            break;
+        case TOK.IDENT:
+            e = new IdentifierExp(token.ident);
+            nextToken();
+            break;
+        case  TOK.NUM:
             auto e1 = new IntegerExp(token.intvalue);
             e = new UnaryExp(e1);
             nextToken();
-            return e;
+            break;
+        default:
+            error("開き括弧でも閉じ括弧でもないトークンです");
+            fatal();
+            assert(false);
         }
-
-        error("開き括弧でも閉じ括弧でもないトークンです");
-        fatal();
-        assert(false);
+        assert(e);
+        return e;
     }
 
     Expression parseMulExp()

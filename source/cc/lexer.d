@@ -4,6 +4,7 @@ import core.stdc.ctype;
 import core.stdc.stdio;
 import core.stdc.stdlib;
 
+import cc.identifier;
 import cc.tokens;
 
 __gshared Token* tokens;
@@ -94,6 +95,7 @@ void tokenizer(const(char)* p)
         {
             token.value = TOK.IDENT;
             token.ptr = p;
+            token.ident = new Identifier(p[0 .. 1], TOK.IDENT);
             token = token.next = allocateToken();
             p++;
             continue;

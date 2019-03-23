@@ -1,5 +1,7 @@
 module cc.tokens;
 
+import cc.identifier;
+
 enum TOK
 {
     NUM = 256,  // 整数トークン
@@ -22,4 +24,6 @@ struct Token
     const(char)* ptr;
     TOK value;
     long intvalue; // signed
+
+    Identifier ident;
 }
