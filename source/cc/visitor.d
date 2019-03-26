@@ -27,9 +27,12 @@ class Visitor
     }
 
     void visit(UnaryExp e)
+    in
     {
         assert(e.e1);
-
+    }
+    do
+    {
         if (e.e1.op == TOK.UNARY)
         {
             (cast(UnaryExp) e.e1).accept(this);
@@ -71,10 +74,13 @@ class Visitor
     }
 
     void visit(MulExp e)
+    in
     {
         assert(e.e1);
         assert(e.e2);
-
+    }
+    do
+    {
         if (e.e1.op == TOK.UNARY)
         {
             (cast(UnaryExp)e.e1).accept(this);
@@ -134,10 +140,13 @@ class Visitor
     }
 
     void visit(DivExp e)
+    in
     {
         assert(e.e1);
         assert(e.e2);
-
+    }
+    do
+    {
         if (e.e1.op == TOK.UNARY)
         {
             (cast(UnaryExp)e.e1).accept(this);
@@ -198,10 +207,13 @@ class Visitor
     }
 
     void visit(AddExp e)
+    in
     {
         assert(e.e1);
         assert(e.e2);
-
+    }
+    do
+    {
         if (e.e1.op == TOK.UNARY)
         {
             (cast(UnaryExp) e.e1).accept(this);
@@ -321,10 +333,13 @@ class Visitor
     }
 
     void visit(AssignExp e)
+    in
     {
         assert(e);
         assert(e.e1);
-
+    }
+    do
+    {
         if (e.e1.op == TOK.UNARY)
         {
             (cast(UnaryExp) e.e1).accept(this);
@@ -409,8 +424,12 @@ class Visitor
     }
 
     void visit(ExpStatement s)
+    in
     {
         assert(s.exp);
+    }
+    do
+    {
         (cast(AssignExp) s.exp).accept(this);
     }
 }

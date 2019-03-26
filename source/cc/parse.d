@@ -205,6 +205,11 @@ class Parser
     }
 
     Expression parseUnaryExp()
+    out(e)
+    {
+        assert(e);
+    }
+    do
     {
         Expression e;
         switch (token.value)
@@ -233,7 +238,6 @@ class Parser
             fatal();
             assert(false);
         }
-        assert(e);
         return e;
     }
 
@@ -289,6 +293,11 @@ class Parser
     }
 
     Expression parseAssignExp()
+    out(e)
+    {
+        assert(e);
+    }
+    do
     {
         Expression e1, e2;
         e1 = parseAddExp();
@@ -302,7 +311,6 @@ class Parser
             break;
         }
         auto e = new AssignExp(e1, e2);
-        assert(e);
         return e;
     }
 
