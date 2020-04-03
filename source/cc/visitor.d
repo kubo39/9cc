@@ -8,17 +8,17 @@ import cc.tokens;
 
 class Visitor
 {
-    void visit(Expression e)
+    void visit(Expression e) @nogc nothrow
     {
         fatal();
     }
 
-    void visit(IntegerExp e)
+    void visit(IntegerExp e) @nogc nothrow
     {
         printf("  push %ld\n", e.value);
     }
 
-    void visit(IdentifierExp e)
+    void visit(IdentifierExp e) @nogc nothrow
     {
         int offset = e.id.getOffset();
         printf("  mov rax, rbp\n");
@@ -26,7 +26,7 @@ class Visitor
         printf("  push rax\n");
     }
 
-    void visit(UnaryExp e)
+    void visit(UnaryExp e) @nogc
     in
     {
         assert(e.e1);
@@ -68,12 +68,12 @@ class Visitor
         else assert(false);
     }
 
-    void visit(BinExp e)
+    void visit(BinExp e) @nogc nothrow
     {
         fatal();
     }
 
-    void visit(MulExp e)
+    void visit(MulExp e) @nogc
     in
     {
         assert(e.e1);
@@ -139,7 +139,7 @@ class Visitor
         printf("  push rax\n");
     }
 
-    void visit(DivExp e)
+    void visit(DivExp e) @nogc
     in
     {
         assert(e.e1);
@@ -206,7 +206,7 @@ class Visitor
         printf("  push rax\n");
     }
 
-    void visit(AddExp e)
+    void visit(AddExp e) @nogc
     in
     {
         assert(e.e1);
@@ -272,7 +272,7 @@ class Visitor
         printf("  push rax\n");
     }
 
-    void visit(MinExp e)
+    void visit(MinExp e) @nogc
     {
         if (e.e1.op == TOK.UNARY)
         {
@@ -332,7 +332,7 @@ class Visitor
         printf("  push rax\n");
     }
 
-    void visit(AssignExp e)
+    void visit(AssignExp e) @nogc
     in
     {
         assert(e);
@@ -418,12 +418,12 @@ class Visitor
         printf("  push rdi\n");
     }
 
-    void visit(Statement s)
+    void visit(Statement s) @nogc nothrow pure
     {
         assert(false);
     }
 
-    void visit(ExpStatement s)
+    void visit(ExpStatement s) @nogc
     in
     {
         assert(s.exp);

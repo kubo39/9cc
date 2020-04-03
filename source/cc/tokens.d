@@ -2,6 +2,11 @@ module cc.tokens;
 
 import cc.identifier;
 
+@nogc:
+@safe:
+nothrow:
+pure:
+
 enum TOK
 {
     NUM = 256,  // 整数トークン

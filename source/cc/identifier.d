@@ -17,32 +17,32 @@ private:
     const char[] name;
     const int offset;
 
-    this(const(char)* name, size_t length, int value, int offset) nothrow
+    this(const(char)* name, size_t length, int value, int offset) nothrow pure
     {
         this.name = name[0 .. length];
         this.value = value;
         this.offset = offset;
     }
 
-    this(const(char)[] name, int value, int offset) nothrow
+    this(const(char)[] name, int value, int offset) nothrow pure
     {
         this.name = name;
         this.value = value;
         this.offset = offset;
     }
 
-    this(const(char)[] name, int offset) nothrow
+    this(const(char)[] name, int offset) nothrow pure
     {
         this(name, TOK.IDENT, offset);
     }
 
-    this(const(char)* name, int offset) nothrow
+    this(const(char)* name, int offset) nothrow pure
     {
         this(name[0 .. strlen(name)], TOK.IDENT, offset);
     }
 
 public:
-    static Identifier idPool(const(char)[] name)
+    static Identifier idPool(const(char)[] name) nothrow
     {
         auto p = name in locals;
         // すでに存在している場合
@@ -56,7 +56,7 @@ public:
         return identifier;
     }
 
-    int getOffset() const nothrow pure
+    int getOffset() const @nogc nothrow pure
     {
         return this.offset;
     }

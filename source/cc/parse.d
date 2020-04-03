@@ -22,12 +22,12 @@ abstract class Expression : ASTNode
 {
     TOK op;
 
-    this(TOK op)
+    this(TOK op) @nogc nothrow pure
     {
         this.op = op;
     }
 
-    override void accept(Visitor v)
+    override void accept(Visitor v) @nogc
     {
         v.visit(this);
     }
@@ -37,7 +37,7 @@ final class IntegerExp : Expression
 {
     long value;
 
-    this(long intvalue)
+    this(long intvalue) @nogc nothrow pure
     {
         super(TOK.NUM);
         this.value = intvalue;
@@ -53,7 +53,7 @@ final class IdentifierExp : Expression
 {
     Identifier id;
 
-    this(Identifier id)
+    this(Identifier id) @nogc nothrow pure
     {
         super(TOK.IDENT);
         this.id = id;
@@ -69,13 +69,13 @@ class UnaryExp : Expression
 {
     Expression e1;
 
-    this(Expression e1)
+    this(Expression e1) @nogc nothrow pure
     {
         super(TOK.UNARY); // FIXME
         this.e1 = e1;
     }
 
-    override void accept(Visitor v)
+    override void accept(Visitor v) @nogc
     {
         v.visit(this);
     }
@@ -86,14 +86,14 @@ class BinExp : Expression
     Expression e1;
     Expression e2;
 
-    this(TOK op, Expression e1, Expression e2)
+    this(TOK op, Expression e1, Expression e2) @nogc nothrow pure
     {
         super(op);
         this.e1 = e1;
         this.e2 = e2;
     }
 
-    override void accept(Visitor v)
+    override void accept(Visitor v) @nogc
     {
         v.visit(this);
     }
@@ -101,12 +101,12 @@ class BinExp : Expression
 
 final class MulExp : BinExp
 {
-    this(Expression e1, Expression e2)
+    this(Expression e1, Expression e2) @nogc nothrow pure
     {
         super(TOK.MUL, e1, e2);
     }
 
-    override void accept(Visitor v)
+    override void accept(Visitor v) @nogc
     {
         v.visit(this);
     }
@@ -114,12 +114,12 @@ final class MulExp : BinExp
 
 final class DivExp : BinExp
 {
-    this(Expression e1, Expression e2)
+    this(Expression e1, Expression e2) @nogc nothrow pure
     {
         super(TOK.DIV, e1, e2);
     }
 
-    override void accept(Visitor v)
+    override void accept(Visitor v) @nogc
     {
         v.visit(this);
     }
@@ -127,12 +127,12 @@ final class DivExp : BinExp
 
 final class AddExp : BinExp
 {
-    this(Expression e1, Expression e2)
+    this(Expression e1, Expression e2) @nogc nothrow pure
     {
         super(TOK.ADD, e1, e2);
     }
 
-    override void accept(Visitor v)
+    override void accept(Visitor v) @nogc
     {
         v.visit(this);
     }
@@ -140,12 +140,12 @@ final class AddExp : BinExp
 
 final class MinExp : BinExp
 {
-    this(Expression e1, Expression e2)
+    this(Expression e1, Expression e2) @nogc nothrow pure
     {
         super(TOK.MIN, e1, e2);
     }
 
-    override void accept(Visitor v)
+    override void accept(Visitor v) @nogc
     {
         v.visit(this);
     }
@@ -153,12 +153,12 @@ final class MinExp : BinExp
 
 final class AssignExp : BinExp
 {
-    this(Expression e1, Expression e2)
+    this(Expression e1, Expression e2) @nogc nothrow pure
     {
         super(TOK.ASSIGN, e1, e2);
     }
 
-    override void accept(Visitor v)
+    override void accept(Visitor v) @nogc
     {
         v.visit(this);
     }
@@ -166,7 +166,7 @@ final class AssignExp : BinExp
 
 abstract class Statement : ASTNode
 {
-    override void accept(Visitor v)
+    override void accept(Visitor v) @nogc
     {
         v.visit(this);
     }
@@ -176,12 +176,12 @@ class ExpStatement : Statement
 {
     Expression exp;
 
-    this(Expression exp)
+    this(Expression exp) @nogc nothrow pure
     {
         this.exp = exp;
     }
 
-    override void accept(Visitor v)
+    override void accept(Visitor v) @nogc
     {
         v.visit(this);
     }
@@ -194,12 +194,12 @@ class Parser
     Token* token;
     size_t pos;
 
-    this()
+    this() @nogc nothrow
     {
         this.token = tokens;
     }
 
-    void nextToken()
+    void nextToken() @nogc nothrow
     {
         this.token = this.token.next;
     }
@@ -266,7 +266,7 @@ class Parser
         return e;
     }
 
-    Expression parseAddExp()
+    Expression parseAddExp() 
     {
         auto e = parseMulExp();
         while (true)

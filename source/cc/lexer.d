@@ -10,12 +10,12 @@ import cc.tokens;
 __gshared Token* tokens;
 
 // Returns a newly allocated Token.
-Token* allocateToken()
+Token* allocateToken() nothrow
 {
     return new Token();
 }
 
-void tokenizer(const(char)* p)
+void tokenizer(const(char)* p) nothrow
 {
     tokens = allocateToken();
     Token* token = tokens;
