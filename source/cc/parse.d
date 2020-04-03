@@ -266,7 +266,7 @@ class Parser
         return e;
     }
 
-    Expression parseAddExp() 
+    Expression parseAddExp()
     {
         auto e = parseMulExp();
         while (true)
