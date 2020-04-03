@@ -95,9 +95,13 @@ void tokenizer(const(char)* p)
         {
             token.value = TOK.IDENT;
             token.ptr = p;
-            token.ident = new Identifier(p[0 .. 1], TOK.IDENT);
+            do
+            {
+                p++;
+            }
+            while ('a' <= *p && *p <= 'z');
+            token.ident = Identifier.idPool(token.ptr[0 .. (p - token.ptr)]);
             token = token.next = allocateToken();
-            p++;
             continue;
         }
         else if (isdigit(*p))

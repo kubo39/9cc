@@ -95,7 +95,7 @@ class BinExp : Expression
 
     override void accept(Visitor v)
     {
-//        v.visit(this);
+        v.visit(this);
     }
 }
 

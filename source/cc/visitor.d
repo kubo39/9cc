@@ -20,7 +20,7 @@ class Visitor
 
     void visit(IdentifierExp e)
     {
-        int offset = ('z' - e.id.name[0] + 1) * 8;
+        int offset = e.id.getOffset();
         printf("  mov rax, rbp\n");
         printf("  sub rax, %d\n", offset);
         printf("  push rax\n");
