@@ -26,6 +26,7 @@ try 15 "5*(9-6)"
 try 4 "(3+5)/2"
 try 2 "a = 2;"
 try 1 "foo = 1"
-try 5 "bar = 2 + 3"
+try 5 "bar = 2 + 3;"
+try 5 "bar = 2 + 3; bar"
 
 echo OK

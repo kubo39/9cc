@@ -59,7 +59,7 @@ final class IdentifierExp : Expression
         this.id = id;
     }
 
-    override void accept(Visitor v)
+    override void accept(Visitor v) @nogc
     {
         v.visit(this);
     }
@@ -228,7 +228,7 @@ class Parser
             e = new IdentifierExp(token.ident);
             nextToken();
             break;
-        case  TOK.NUM:
+        case TOK.NUM:
             auto e1 = new IntegerExp(token.intvalue);
             e = new UnaryExp(e1);
             nextToken();
@@ -306,12 +306,12 @@ class Parser
         case TOK.ASSIGN:
             nextToken();
             e2 = parseAssignExp();
+            assert(e2);
             break;
         default:
             break;
         }
-        auto e = new AssignExp(e1, e2);
-        return e;
+        return new AssignExp(e1, e2);
     }
 
     Statement parseExpStatement()

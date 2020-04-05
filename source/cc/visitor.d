@@ -340,82 +340,92 @@ class Visitor
     }
     do
     {
-        if (e.e1.op == TOK.UNARY)
+        if (e.e2 !is null)
         {
-            (cast(UnaryExp) e.e1).accept(this);
-        }
-        else if (e.e1.op == TOK.ADD)
-        {
-            (cast(AddExp) e.e1).accept(this);
-        }
-        else if (e.e1.op == TOK.MIN)
-        {
-            (cast(MinExp) e.e1).accept(this);
-        }
-        else if (e.e1.op == TOK.MUL)
-        {
-            (cast(MulExp) e.e1).accept(this);
-        }
-        else if (e.e1.op == TOK.DIV)
-        {
-            (cast(DivExp) e.e1).accept(this);
-        }
-        else if (e.e1.op == TOK.NUM)
-        {
-            (cast(IntegerExp) e.e1).accept(this);
-        }
-        else if (e.e1.op == TOK.IDENT)
-        {
+            assert(e.e1.op == TOK.IDENT);
+
             (cast(IdentifierExp) e.e1).accept(this);
-        }
-        else assert(false);
 
-        if (!e.e2) return;
+            if (e.e2.op == TOK.UNARY)
+            {
+                (cast(UnaryExp) e.e2).accept(this);
+            }
+            else if (e.e2.op == TOK.ADD)
+            {
+                (cast(AddExp) e.e2).accept(this);
+            }
+            else if (e.e2.op == TOK.MIN)
+            {
+                (cast(MinExp) e.e2).accept(this);
+            }
+            else if (e.e2.op == TOK.MUL)
+            {
+                (cast(MulExp) e.e2).accept(this);
+            }
+            else if (e.e2.op == TOK.DIV)
+            {
+                (cast(DivExp) e.e2).accept(this);
+            }
+            else if (e.e2.op == TOK.NUM)
+            {
+                (cast(IntegerExp) e.e2).accept(this);
+            }
+            else if (e.e2.op == TOK.IDENT)
+            {
+                (cast(IdentifierExp) e.e2).accept(this);
+            }
+            else if (e.e2.op == TOK.ASSIGN)
+            {
+                (cast(AssignExp) e.e2).accept(this);
+            }
+            else
+            {
+                printf("??: %d\n", e.e2.op);
+                assert(false);
+            }
 
-        assert(e.op == TOK.ASSIGN);
-
-        if (e.e2.op == TOK.UNARY)
-        {
-            (cast(UnaryExp) e.e2).accept(this);
-        }
-        else if (e.e2.op == TOK.ADD)
-        {
-            (cast(AddExp) e.e2).accept(this);
-        }
-        else if (e.e2.op == TOK.MIN)
-        {
-            (cast(MinExp) e.e2).accept(this);
-        }
-        else if (e.e2.op == TOK.MUL)
-        {
-            (cast(MulExp) e.e2).accept(this);
-        }
-        else if (e.e2.op == TOK.DIV)
-        {
-            (cast(DivExp) e.e2).accept(this);
-        }
-        else if (e.e2.op == TOK.NUM)
-        {
-            (cast(IntegerExp) e.e2).accept(this);
-        }
-        else if (e.e2.op == TOK.IDENT)
-        {
-            (cast(IdentifierExp) e.e2).accept(this);
-        }
-        else if (e.e2.op == TOK.ASSIGN)
-        {
-            (cast(AssignExp) e.e2).accept(this);
+            printf("  pop rdi\n");
+            printf("  pop rax\n");
+            printf("  mov [rax], rdi\n");
+            printf("  push rdi\n");
         }
         else
         {
-            printf("??: %d\n", e.e2.op);
-            assert(false);
-        }
+            assert(!e.e2);
 
-        printf("  pop rdi\n");
-        printf("  pop rax\n");
-        printf("  mov [rax], rdi\n");
-        printf("  push rdi\n");
+            if (e.e1.op == TOK.UNARY)
+            {
+                (cast(UnaryExp) e.e1).accept(this);
+            }
+            else if (e.e1.op == TOK.ADD)
+            {
+                (cast(AddExp) e.e1).accept(this);
+            }
+            else if (e.e1.op == TOK.MIN)
+            {
+                (cast(MinExp) e.e1).accept(this);
+            }
+            else if (e.e1.op == TOK.MUL)
+            {
+                (cast(MulExp) e.e1).accept(this);
+            }
+            else if (e.e1.op == TOK.DIV)
+            {
+                (cast(DivExp) e.e1).accept(this);
+            }
+            else if (e.e1.op == TOK.NUM)
+            {
+                (cast(IntegerExp) e.e1).accept(this);
+            }
+            else if (e.e1.op == TOK.IDENT)
+            {
+                (cast(IdentifierExp) e.e1).accept(this);
+                printf("  pop rax\n");
+                printf("  mov rax, [rax]\n");
+                printf("  push rax\n");
+            }
+            else assert(false);
+        }
     }
 
     void visit(Statement s) @nogc nothrow pure
