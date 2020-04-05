@@ -135,7 +135,7 @@ class Visitor
 
         printf("  pop rdi\n");
         printf("  pop rax\n");
-        printf("  mul rdi\n");
+        printf("  imul rax, rdi\n");
         printf("  push rax\n");
     }
 
@@ -201,8 +201,8 @@ class Visitor
 
         printf("  pop rdi\n");
         printf("  pop rax\n");
-        printf("  mov rdx, 0\n");
-        printf("  div rdi\n");
+        printf("  cqo\n");
+        printf("  idiv rdi\n");
         printf("  push rax\n");
     }
 
