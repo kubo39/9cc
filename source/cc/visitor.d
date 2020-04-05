@@ -444,13 +444,9 @@ class Visitor
     }
 
     void visit(ReturnStatement s) @nogc
-    in
     {
-        assert(s.exp);
-    }
-    do
-    {
-        (cast(AssignExp) s.exp).accept(this);
+        if (s.exp)
+            (cast(AssignExp) s.exp).accept(this);
         printf("  pop rax\n");
         printf("  mov rsp, rbp\n");
         printf("  pop rbp\n");
