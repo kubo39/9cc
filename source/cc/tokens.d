@@ -20,6 +20,7 @@ enum TOK
     DIV,
     UNARY,
     ASSIGN,
+    RETURN,
     EOF,
 }
 

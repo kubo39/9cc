@@ -28,5 +28,6 @@ try 2 "a = 2;"
 try 1 "foo = 1"
 try 5 "bar = 2 + 3;"
 try 5 "bar = 2 + 3; bar"
+try 8 "return 8;"
 
 echo OK

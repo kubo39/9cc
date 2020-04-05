@@ -3,6 +3,7 @@ module cc.lexer;
 import core.stdc.ctype;
 import core.stdc.stdio;
 import core.stdc.stdlib;
+import core.stdc.string;
 
 import cc.identifier;
 import cc.tokens;
@@ -93,14 +94,22 @@ void tokenizer(const(char)* p) nothrow
         }
         else if ('a' <= *p && *p <= 'z')
         {
-            token.value = TOK.IDENT;
             token.ptr = p;
             do
             {
                 p++;
             }
             while ('a' <= *p && *p <= 'z');
-            token.ident = Identifier.idPool(token.ptr[0 .. (p - token.ptr)]);
+            const(size_t) len = p - token.ptr;
+            if (len == 6 && strncmp(token.ptr, "return", 6))
+            {
+                token.value = TOK.RETURN;
+            }
+            else
+            {
+                token.ident = Identifier.idPool(token.ptr[0 .. (p - token.ptr)]);
+                token.value = TOK.IDENT;
+            }
             token = token.next = allocateToken();
             continue;
         }

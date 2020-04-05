@@ -187,6 +187,21 @@ class ExpStatement : Statement
     }
 }
 
+final class ReturnStatement : Statement
+{
+    Expression exp;
+
+    this(Expression exp) @nogc nothrow pure
+    {
+        this.exp = exp;
+    }
+
+    override void accept(Visitor v) @nogc
+    {
+        v.visit(this);
+    }
+}
+
 
 class Parser
 {
@@ -339,6 +354,12 @@ class Parser
             {
             case TOK.SEMICOLON:
                 nextToken();
+                break;
+            case TOK.RETURN:
+                Expression exp;
+                nextToken();
+                exp = token.value == TOK.SEMICOLON ? null : parseAssignExp();
+                statements ~= new ReturnStatement(exp);
                 break;
             case TOK.LEFTPARENT:
             case TOK.RIGHTPARENT:
