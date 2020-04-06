@@ -500,6 +500,24 @@ class Visitor
         (cast(AssignExp) s.exp).accept(this);
     }
 
+    void visit(IfStatement s) @nogc
+    in
+    {
+        assert(s.condition);
+        assert(s.ifbody);
+    }
+    do
+    {
+        (cast(AssignExp) s.condition).accept(this);
+        printf("  pop rax\n");
+        printf("  cmp rax, 0\n");
+        printf("  je .LendXXX\n");
+
+        // FIXME
+        (cast(ExpStatement) s.ifbody).accept(this);
+        printf(".LendXXX:");
+    }
+
     void visit(ReturnStatement s) @nogc
     {
         if (s.exp)
