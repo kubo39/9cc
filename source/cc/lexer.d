@@ -100,14 +100,20 @@ void tokenizer(const(char)* p) nothrow
                 p++;
             }
             while ('a' <= *p && *p <= 'z');
+
             const(size_t) len = p - token.ptr;
-            if (len == 6 && strncmp(token.ptr, "return", 6))
+
+            if (len == 2 && strncmp(token.ptr, "if", 2))
+            {
+                token.value = TOK.IF;
+            }
+            else if (len == 6 && strncmp(token.ptr, "return", 6))
             {
                 token.value = TOK.RETURN;
             }
             else
             {
-                token.ident = Identifier.idPool(token.ptr[0 .. (p - token.ptr)]);
+                token.ident = Identifier.idPool(token.ptr[0 .. len]);
                 token.value = TOK.IDENT;
             }
             token = token.next = allocateToken();

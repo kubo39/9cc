@@ -187,6 +187,23 @@ class ExpStatement : Statement
     }
 }
 
+final class IfStatement : Statement
+{
+    Expression condition;
+    Statement ifbody;
+
+    this(Expression condition, Statement ifbody) @nogc nothrow pure
+    {
+        this.condition = condition;
+        this.ifbody = ifbody;
+    }
+
+    override void accept(Visitor v) @nogc
+    {
+        v.visit(this);
+    }
+}
+
 final class ReturnStatement : Statement
 {
     Expression exp;
@@ -345,9 +362,8 @@ class Parser
         return s;
     }
 
-    Statement[] parseStatement()
+    Statement parseStatement()
     {
-        Statement[] statements;
         while (true)
         {
             switch (token.value)
@@ -355,22 +371,27 @@ class Parser
             case TOK.SEMICOLON:
                 nextToken();
                 break;
+            case TOK.IF:
+                nextToken();
+                assert(token.value == TOK.LEFTPARENT);
+                Expression condition = parseAssignExp();
+                nextToken();
+                assert(token.value == TOK.RIGHTPARENT);
+                Statement ifbody = parseStatement();
+                return new IfStatement(condition, ifbody);
             case TOK.RETURN:
                 Expression exp;
                 nextToken();
                 exp = token.value == TOK.SEMICOLON ? null : parseAssignExp();
-                statements ~= new ReturnStatement(exp);
-                break;
+                return new ReturnStatement(exp);
             case TOK.LEFTPARENT:
             case TOK.RIGHTPARENT:
             case TOK.IDENT:
             case TOK.NUM:
             case TOK.UNARY:
             case TOK.ASSIGN:
-                statements ~= parseExpStatement();
-                break;
+                return parseExpStatement();
             case TOK.EOF:
-                return statements;
             default:
                 assert(false);
             }
@@ -378,8 +399,18 @@ class Parser
         assert(false);
     }
 
+    Statement[] parseStatements()
+    {
+        Statement[] statements;
+        while (token.value != TOK.EOF)
+        {
+            statements ~= parseStatement();
+        }
+        return statements;
+    }
+
     ASTNode[] parse()
     {
-        return cast(ASTNode[]) parseStatement();
+        return cast(ASTNode[]) parseStatements();
     }
 }
