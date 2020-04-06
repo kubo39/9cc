@@ -105,6 +105,10 @@ class Visitor
         {
             (cast(IntegerExp) e.e1).accept(this);
         }
+        else if (e.e1.op == TOK.IDENT)
+        {
+            (cast(IdentifierExp) e.e1).accept(this);
+        }
         else assert (false);
 
         if (e.e2.op == TOK.UNARY)
@@ -130,6 +134,10 @@ class Visitor
         else if (e.e2.op == TOK.NUM)
         {
             (cast(IntegerExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.IDENT)
+        {
+            (cast(IdentifierExp) e.e2).accept(this);
         }
         else assert (false);
 
@@ -171,6 +179,10 @@ class Visitor
         {
             (cast(IntegerExp) e.e1).accept(this);
         }
+        else if (e.e1.op == TOK.IDENT)
+        {
+            (cast(IdentifierExp) e.e1).accept(this);
+        }
         else assert (false);
 
         if (e.e2.op == TOK.UNARY)
@@ -196,6 +208,10 @@ class Visitor
         else if (e.e2.op == TOK.NUM)
         {
             (cast(IntegerExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.IDENT)
+        {
+            (cast(IdentifierExp) e.e2).accept(this);
         }
         else assert (false);
 
@@ -238,6 +254,10 @@ class Visitor
         {
             (cast(IntegerExp) e.e1).accept(this);
         }
+        else if (e.e1.op == TOK.IDENT)
+        {
+            (cast(IdentifierExp) e.e1).accept(this);
+        }
         else assert(false);
 
         if (e.e2.op == TOK.UNARY)
@@ -263,6 +283,10 @@ class Visitor
         else if (e.e2.op == TOK.NUM)
         {
             (cast(IntegerExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.IDENT)
+        {
+            (cast(IdentifierExp) e.e2).accept(this);
         }
         else assert(false);
 
@@ -298,6 +322,10 @@ class Visitor
         {
             (cast(IntegerExp) e.e1).accept(this);
         }
+        else if (e.e1.op == TOK.IDENT)
+        {
+            (cast(IdentifierExp) e.e1).accept(this);
+        }
         else assert(false);
 
         if (e.e2.op == TOK.UNARY)
@@ -323,6 +351,10 @@ class Visitor
         else if (e.e2.op == TOK.NUM)
         {
             (cast(IntegerExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.IDENT)
+        {
+            (cast(IdentifierExp) e.e2).accept(this);
         }
         else assert(false);
 
