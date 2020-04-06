@@ -188,6 +188,9 @@ class Visitor
         else if (e.e1.op == TOK.IDENT)
         {
             (cast(IdentifierExp) e.e1).accept(this);
+            printf("  pop rax\n");
+            printf("  mov rax, [rax]\n");
+            printf("  push rax\n");
         }
         else assert (false);
 
@@ -218,6 +221,9 @@ class Visitor
         else if (e.e2.op == TOK.IDENT)
         {
             (cast(IdentifierExp) e.e2).accept(this);
+            printf("  pop rax\n");
+            printf("  mov rax, [rax]\n");
+            printf("  push rax\n");
         }
         else assert (false);
 
@@ -475,6 +481,7 @@ class Visitor
                 printf("  push rax\n");
             }
             else assert(false);
+
         }
     }
 
@@ -496,10 +503,12 @@ class Visitor
     void visit(ReturnStatement s) @nogc
     {
         if (s.exp)
+        {
             (cast(AssignExp) s.exp).accept(this);
-        printf("  pop rax\n");
-        printf("  mov rsp, rbp\n");
-        printf("  pop rbp\n");
+            printf("  pop rax\n");
+            printf("  mov rsp, rbp\n");
+            printf("  pop rbp\n");
+        }
         printf("  ret\n");
     }
 }
