@@ -191,11 +191,13 @@ final class IfStatement : Statement
 {
     Expression condition;
     Statement ifbody;
+    Statement elsebody;
 
-    this(Expression condition, Statement ifbody) @nogc nothrow pure
+    this(Expression condition, Statement ifbody, Statement elsebody) @nogc nothrow pure
     {
         this.condition = condition;
         this.ifbody = ifbody;
+        this.elsebody = elsebody;
     }
 
     override void accept(Visitor v) @nogc
@@ -378,7 +380,7 @@ class Parser
                 nextToken();
                 assert(token.value == TOK.RIGHTPARENT);
                 Statement ifbody = parseStatement();
-                return new IfStatement(condition, ifbody);
+                return new IfStatement(condition, ifbody, null);
             case TOK.RETURN:
                 Expression exp;
                 nextToken();

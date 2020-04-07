@@ -21,6 +21,7 @@ enum TOK
     UNARY,
     ASSIGN,
     IF,
+    ELSE,
     RETURN,
     EOF,
 }

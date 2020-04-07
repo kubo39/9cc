@@ -107,6 +107,10 @@ void tokenizer(const(char)* p) nothrow
             {
                 token.value = TOK.IF;
             }
+            if (len == 4 && strncmp(token.ptr, "else", 4))
+            {
+                token.value = TOK.ELSE;
+            }
             else if (len == 6 && strncmp(token.ptr, "return", 6))
             {
                 token.value = TOK.RETURN;
