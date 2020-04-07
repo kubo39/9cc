@@ -513,8 +513,7 @@ class Visitor
         printf("  cmp rax, 0\n");
         printf("  je .LendXXX\n");
 
-        // FIXME
-        (cast(ExpStatement) s.ifbody).accept(this);
+        s.ifbody.accept(this);
         printf(".LendXXX:");
     }
 
