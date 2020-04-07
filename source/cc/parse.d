@@ -375,10 +375,18 @@ class Parser
                 break;
             case TOK.IF:
                 nextToken();
-                assert(token.value == TOK.LEFTPARENT);
+                if (token.value != TOK.LEFTPARENT)
+                {
+                    error("開き括弧でないトークンです");
+                    fatal();
+                }
                 Expression condition = parseAssignExp();
                 nextToken();
-                assert(token.value == TOK.RIGHTPARENT);
+                if (token.value != TOK.RIGHTPARENT)
+                {
+                    error("開き括弧でないトークンです");
+                    fatal();
+                }
                 Statement ifbody = parseStatement();
                 return new IfStatement(condition, ifbody, null);
             case TOK.RETURN:
