@@ -511,10 +511,22 @@ class Visitor
         (cast(AssignExp) s.condition).accept(this);
         printf("  pop rax\n");
         printf("  cmp rax, 0\n");
-        printf("  je .LendXXX\n");
+
+        if (s.elsebody !is null)
+        {
+            printf("  je .LelseXXX\n");
+        }
 
         s.ifbody.accept(this);
-        printf(".LendXXX:");
+        printf("  jmp .LendXXX\n");
+
+        if (s.elsebody !is null)
+        {
+            printf(".LelseXXX:\n");
+            s.elsebody.accept(this);
+        }
+
+        printf(".LendXXX:\n");
     }
 
     void visit(ReturnStatement s) @nogc

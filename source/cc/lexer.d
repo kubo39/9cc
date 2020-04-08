@@ -95,23 +95,22 @@ void tokenizer(const(char)* p) nothrow
         else if ('a' <= *p && *p <= 'z')
         {
             token.ptr = p;
-            do
+            while (1)
             {
-                p++;
+                const c = *++p;
+                if (c < 'a' || 'z' < c)
+                    break;
             }
-            while ('a' <= *p && *p <= 'z');
-
             const(size_t) len = p - token.ptr;
-
-            if (len == 2 && strncmp(token.ptr, "if", 2))
+            if (len == 2 && !strncmp(token.ptr, "if", 2))
             {
                 token.value = TOK.IF;
             }
-            if (len == 4 && strncmp(token.ptr, "else", 4))
+            else if (len == 4 && !strncmp(token.ptr, "else", 4))
             {
                 token.value = TOK.ELSE;
             }
-            else if (len == 6 && strncmp(token.ptr, "return", 6))
+            else if (len == 6 && !strncmp(token.ptr, "return", 6))
             {
                 token.value = TOK.RETURN;
             }

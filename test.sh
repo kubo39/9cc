@@ -32,6 +32,7 @@ try 8 "return 8;"
 try 6 "a = 3; b = a * a - a"
 try 14 "a = 3; b = 5 * 6 - 8; return a + b / 2;"
 try 2 "if (1) return 2;"
-try 1 "if (0) return 2; return 1;"
+try 2 "if (1) return 2; else return 1;"
+try 1 "if (0) return 2; else return 1;"
 
 echo OK

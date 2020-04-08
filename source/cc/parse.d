@@ -374,21 +374,51 @@ class Parser
                 nextToken();
                 break;
             case TOK.IF:
+                Expression condition;
+                Statement ifbody, elsebody;
+
+                // import core.stdc.stdio;
+                // perror("parseIfStatement:Start\n");
+
                 nextToken();
                 if (token.value != TOK.LEFTPARENT)
                 {
                     error("開き括弧でないトークンです");
                     fatal();
                 }
-                Expression condition = parseAssignExp();
                 nextToken();
+
+                condition = parseAssignExp();
+
                 if (token.value != TOK.RIGHTPARENT)
                 {
-                    error("開き括弧でないトークンです");
+                    error("閉じ括弧でないトークンです");
                     fatal();
                 }
-                Statement ifbody = parseStatement();
-                return new IfStatement(condition, ifbody, null);
+                nextToken();
+
+                ifbody = parseStatement();
+                if (ifbody is null)
+                {
+                    error("有効でない文です");
+                    fatal();
+                }
+
+                nextToken();
+                if (token.value == TOK.ELSE)
+                {
+                    nextToken();
+                    elsebody = parseStatement();
+                    if (elsebody is null)
+                    {
+                        error("有効でない文です");
+                        fatal();
+                    }
+                }
+
+                // perror("parseIfStatement:End\n");
+
+                return new IfStatement(condition, ifbody, elsebody);
             case TOK.RETURN:
                 Expression exp;
                 nextToken();
@@ -402,8 +432,9 @@ class Parser
             case TOK.ASSIGN:
                 return parseExpStatement();
             case TOK.EOF:
+                return null;
             default:
-                assert(false);
+                assert(false, "never comes here.");
             }
         }
         assert(false);
@@ -414,7 +445,9 @@ class Parser
         Statement[] statements;
         while (token.value != TOK.EOF)
         {
-            statements ~= parseStatement();
+            auto s = parseStatement();
+            if (s !is null)
+                statements ~= s;
         }
         return statements;
     }

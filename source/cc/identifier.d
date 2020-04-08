@@ -42,6 +42,11 @@ private:
     }
 
 public:
+    static Identifier idPool(const(char)* s, uint len) nothrow
+    {
+        return idPool(s[0 .. len]);
+    }
+
     static Identifier idPool(const(char)[] name) nothrow
     {
         auto p = name in locals;
