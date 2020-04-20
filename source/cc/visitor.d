@@ -388,6 +388,109 @@ class Visitor
         printf("  push rax\n");
     }
 
+    void visit(EqualExp e) @nogc
+    in
+    {
+        assert(e.e1);
+        assert(e.e2);
+    }
+    do
+    {
+        if (e.e1.op == TOK.UNARY)
+        {
+            (cast(UnaryExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.EQUAL || e.e1.op == TOK.NOTEQUAL)
+        {
+            (cast(EqualExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.ADD)
+        {
+            (cast(AddExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.MIN)
+        {
+            (cast(MinExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.MUL)
+        {
+            (cast(MulExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.DIV)
+        {
+            (cast(DivExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.NUM)
+        {
+            (cast(IntegerExp) e.e1).accept(this);
+        }
+        else if (e.e1.op == TOK.IDENT)
+        {
+            (cast(IdentifierExp) e.e1).accept(this);
+            printf("  pop rax\n");
+            printf("  mov rax, [rax]\n");
+            printf("  push rax\n");
+        }
+        else assert(false);
+
+        if (e.e2.op == TOK.UNARY)
+        {
+            (cast(UnaryExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.EQUAL || e.e2.op == TOK.NOTEQUAL)
+        {
+            (cast(EqualExp) e.e1).accept(this);
+        }
+        else if (e.e2.op == TOK.ADD)
+        {
+            (cast(AddExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.MIN)
+        {
+            (cast(MinExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.MUL)
+        {
+            (cast(MulExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.DIV)
+        {
+            (cast(DivExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.NUM)
+        {
+            (cast(IntegerExp) e.e2).accept(this);
+        }
+        else if (e.e2.op == TOK.IDENT)
+        {
+            (cast(IdentifierExp) e.e2).accept(this);
+            printf("  pop rax\n");
+            printf("  mov rax, [rax]\n");
+            printf("  push rax\n");
+        }
+        else assert(false);
+
+        printf("  pop rdi\n");
+        printf("  pop rax\n");
+        printf("  cmp rax, rdi\n");
+
+        if (e.op == TOK.EQUAL)
+        {
+            printf("  sete al\n");
+        }
+        else if (e.op == TOK.NOTEQUAL)
+        {
+            printf("  setne al\n");
+        }
+        else
+        {
+            assert(false);
+        }
+
+        printf("  movzb rax, al\n");
+        printf("  push rax\n");
+    }
+
     void visit(AssignExp e) @nogc
     in
     {
@@ -405,6 +508,10 @@ class Visitor
             if (e.e2.op == TOK.UNARY)
             {
                 (cast(UnaryExp) e.e2).accept(this);
+            }
+            else if (e.e2.op == TOK.EQUAL || e.e2.op == TOK.NOTEQUAL)
+            {
+                (cast(EqualExp) e.e1).accept(this);
             }
             else if (e.e2.op == TOK.ADD)
             {
@@ -452,6 +559,10 @@ class Visitor
             if (e.e1.op == TOK.UNARY)
             {
                 (cast(UnaryExp) e.e1).accept(this);
+            }
+            else if (e.e1.op == TOK.EQUAL || e.e1.op == TOK.NOTEQUAL)
+            {
+                (cast(EqualExp) e.e1).accept(this);
             }
             else if (e.e1.op == TOK.ADD)
             {

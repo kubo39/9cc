@@ -78,11 +78,32 @@ void tokenizer(const(char)* p) nothrow
         }
         else if (*p == '=')
         {
-            token.value = TOK.ASSIGN;
             token.ptr = p;
-            token = token.next = allocateToken();
             p++;
+            if (*p == '=')
+            {
+                p++;
+                token.value = TOK.EQUAL;
+            }
+            else
+            {
+                token.value = TOK.ASSIGN;
+            }
+            token = token.next = allocateToken();
             continue;
+        }
+        else if (*p == '!')
+        {
+            token.ptr = p;
+            p++;
+            if (*p == '=')
+            {
+                p++;
+                token.value = TOK.NOTEQUAL;
+                token = token.next = allocateToken();
+                continue;
+            }
+            // fallthrough: fail to tokenize.
         }
         else if (*p == ';')
         {

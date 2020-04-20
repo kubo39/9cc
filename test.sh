@@ -35,4 +35,7 @@ try 2 "if (1) return 2;"
 try 2 "if (1) return 2; else return 1;"
 try 1 "if (0) return 2; else return 1;"
 
+try 0 "0 == 1"
+try 1 "0 != 1"
+
 echo OK

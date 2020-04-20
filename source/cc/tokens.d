@@ -13,6 +13,8 @@ enum TOK
     LEFTPARENT,
     RIGHTPARENT,
     SEMICOLON,
+    EQUAL,
+    NOTEQUAL,
     IDENT,
     ADD,
     MIN,

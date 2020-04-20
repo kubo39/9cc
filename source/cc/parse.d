@@ -151,6 +151,20 @@ final class MinExp : BinExp
     }
 }
 
+
+final class EqualExp : BinExp
+{
+    this(TOK op, Expression e1, Expression e2) @nogc nothrow pure
+    {
+        super(op, e1, e2);
+    }
+
+    override void accept(Visitor v) @nogc
+    {
+        v.visit(this);
+    }
+}
+
 final class AssignExp : BinExp
 {
     this(Expression e1, Expression e2) @nogc nothrow pure
@@ -326,6 +340,36 @@ class Parser
         return e;
     }
 
+    Expression parseEqualExp()
+    out (e)
+    {
+        assert(e);
+    }
+    do
+    {
+        auto e = parseAddExp();
+        while (true)
+        {
+            switch (token.value)
+            {
+            case TOK.EQUAL:
+                nextToken();
+                auto e2 = parseAddExp();
+                e = new EqualExp(TOK.EQUAL, e, e2);
+                continue;
+            case TOK.NOTEQUAL:
+                nextToken();
+                auto e2 = parseAddExp();
+                e = new EqualExp(TOK.NOTEQUAL, e, e2);
+                continue;
+            default:
+                break;
+            }
+            break;
+        }
+        return e;
+    }
+
     Expression parseAssignExp()
     out(e)
     {
@@ -334,7 +378,7 @@ class Parser
     do
     {
         Expression e1, e2;
-        e1 = parseAddExp();
+        e1 = parseEqualExp();
         switch (token.value)
         {
         case TOK.ASSIGN:
