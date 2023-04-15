@@ -262,6 +262,16 @@ class Parser
         Expression e;
         switch (token.value)
         {
+        case TOK.ADD:
+            nextToken();
+            e = parseUnaryExp();
+            break;
+        case TOK.MIN:
+            nextToken();
+            auto e1 = new IntegerExp(0);
+            auto e2 = parseUnaryExp();
+            e = new MinExp(e1, e2);
+            break;
         case TOK.LEFTPARENT:
             nextToken();
             e = parseAddExp();
@@ -474,6 +484,8 @@ class Parser
             case TOK.NUM:
             case TOK.UNARY:
             case TOK.ASSIGN:
+            case TOK.ADD:
+            case TOK.MIN:
                 return parseExpStatement();
             case TOK.EOF:
                 return null;
