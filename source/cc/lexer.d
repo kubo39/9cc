@@ -152,7 +152,7 @@ void tokenizer(const(char)* p) nothrow
             continue;
         }
 
-        fprintf(stderr, "トークナイズできません: %s\n", *p);
+        fprintf(stderr, "トークナイズできません: %s\n", p);
         exit(EXIT_FAILURE);
     }
     token.value = TOK.EOF;

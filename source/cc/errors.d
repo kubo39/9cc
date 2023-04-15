@@ -8,7 +8,7 @@ nothrow:
 
 void error(const(char)* p)
 {
-    fprintf(stderr, "予期しないトークンです: %s", *p);
+    fprintf(stderr, "予期しないトークンです: %s", p);
     fputc('\n', stderr);
     fflush(stderr);
 }
