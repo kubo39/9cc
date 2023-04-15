@@ -76,6 +76,38 @@ void tokenizer(const(char)* p) nothrow
             p++;
             continue;
         }
+        else if (*p == '<')
+        {
+            token.ptr = p;
+            p++;
+            if (*p == '=')
+            {
+                p++;
+                token.value = TOK.LESS_OR_EQUAL;
+            }
+            else
+            {
+                token.value = TOK.LESS_THAN;
+            }
+            token = token.next = allocateToken();
+            continue;
+        }
+        else if (*p == '>')
+        {
+            token.ptr = p;
+            p++;
+            if (*p == '=')
+            {
+                p++;
+                token.value = TOK.GREATER_OR_EQUAL;
+            }
+            else
+            {
+                token.value = TOK.GREATER_THAN;
+            }
+            token = token.next = allocateToken();
+            continue;
+        }
         else if (*p == '=')
         {
             token.ptr = p;
