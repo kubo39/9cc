@@ -388,7 +388,7 @@ class Visitor
         printf("  push rax\n");
     }
 
-    void visit(EqualExp e) @nogc
+    void visit(CmpExp e) @nogc
     in
     {
         assert(e.e1);
@@ -402,7 +402,7 @@ class Visitor
         }
         else if (e.e1.op == TOK.EQUAL || e.e1.op == TOK.NOTEQUAL)
         {
-            (cast(EqualExp) e.e1).accept(this);
+            (cast(CmpExp) e.e1).accept(this);
         }
         else if (e.e1.op == TOK.ADD)
         {
@@ -439,7 +439,7 @@ class Visitor
         }
         else if (e.e2.op == TOK.EQUAL || e.e2.op == TOK.NOTEQUAL)
         {
-            (cast(EqualExp) e.e1).accept(this);
+            (cast(CmpExp) e.e1).accept(this);
         }
         else if (e.e2.op == TOK.ADD)
         {
@@ -511,7 +511,7 @@ class Visitor
             }
             else if (e.e2.op == TOK.EQUAL || e.e2.op == TOK.NOTEQUAL)
             {
-                (cast(EqualExp) e.e1).accept(this);
+                (cast(CmpExp) e.e1).accept(this);
             }
             else if (e.e2.op == TOK.ADD)
             {
@@ -562,7 +562,7 @@ class Visitor
             }
             else if (e.e1.op == TOK.EQUAL || e.e1.op == TOK.NOTEQUAL)
             {
-                (cast(EqualExp) e.e1).accept(this);
+                (cast(CmpExp) e.e1).accept(this);
             }
             else if (e.e1.op == TOK.ADD)
             {
