@@ -482,6 +482,14 @@ class Visitor
         {
             printf("  setne al\n");
         }
+        else if (e.op == TOK.LESS_THAN)
+        {
+            printf("  setl al\n");
+        }
+        else if (e.op == TOK.LESS_OR_EQUAL)
+        {
+            printf("  setle al\n");
+        }
         else
         {
             assert(false);
@@ -560,7 +568,10 @@ class Visitor
             {
                 (cast(UnaryExp) e.e1).accept(this);
             }
-            else if (e.e1.op == TOK.EQUAL || e.e1.op == TOK.NOTEQUAL)
+            else if (e.e1.op == TOK.EQUAL ||
+                     e.e1.op == TOK.NOTEQUAL ||
+                     e.e1.op == TOK.LESS_THAN ||
+                     e.e1.op == TOK.LESS_OR_EQUAL)
             {
                 (cast(CmpExp) e.e1).accept(this);
             }

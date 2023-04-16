@@ -366,12 +366,20 @@ class Parser
             case TOK.NOTEQUAL:
             case TOK.LESS_THAN:
             case TOK.LESS_OR_EQUAL:
-            case TOK.GREATER_THAN:
-            case TOK.GREATER_OR_EQUAL:
                 auto op = token.value;
                 nextToken();
                 auto e2 = parseAddExp();
                 e = new CmpExp(op, e, e2);
+                continue;
+            case TOK.GREATER_THAN:
+                nextToken();
+                auto e2 = parseAddExp();
+                e = new CmpExp(TOK.LESS_THAN, e2, e);
+                continue;
+            case TOK.GREATER_OR_EQUAL:
+                nextToken();
+                auto e2 = parseAddExp();
+                e = new CmpExp(TOK.LESS_OR_EQUAL, e2, e);
                 continue;
             default:
                 break;
