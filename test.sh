@@ -27,6 +27,26 @@ try 4 "(3+5)/2"
 try 10 "-10+20"
 try 10 '- -10'
 try 10 '- - +10'
+
+try 0 "0 == 1"
+try 1 "42==42"
+try 1 "0 != 1"
+try 0 "42!=42"
+
+try 1 '0<1'
+try 0 '1<1'
+try 0 '2<1'
+try 1 '0<=1'
+try 1 '1<=1'
+try 0 '2<=1'
+
+try 1 '1>0'
+try 0 '1>1'
+try 0 '1>2'
+try 1 '1>=0'
+try 1 '1>=1'
+try 0 '1>=2'
+
 try 2 "a = 2;"
 try 1 "foo = 1"
 try 5 "bar = 2 + 3;"
@@ -37,8 +57,5 @@ try 14 "a = 3; b = 5 * 6 - 8; return a + b / 2;"
 try 2 "if (1) return 2;"
 try 2 "if (1) return 2; else return 1;"
 try 1 "if (0) return 2; else return 1;"
-
-try 0 "0 == 1"
-try 1 "0 != 1"
 
 echo OK

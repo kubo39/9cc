@@ -152,7 +152,7 @@ final class MinExp : BinExp
 }
 
 
-final class EqualExp : BinExp
+final class CmpExp : BinExp
 {
     this(TOK op, Expression e1, Expression e2) @nogc nothrow pure
     {
@@ -350,7 +350,7 @@ class Parser
         return e;
     }
 
-    Expression parseEqualExp()
+    Expression parseCmpExp()
     out (e)
     {
         assert(e);
@@ -363,14 +363,23 @@ class Parser
             switch (token.value)
             {
             case TOK.EQUAL:
-                nextToken();
-                auto e2 = parseAddExp();
-                e = new EqualExp(TOK.EQUAL, e, e2);
-                continue;
             case TOK.NOTEQUAL:
+            case TOK.LESS_THAN:
+            case TOK.LESS_OR_EQUAL:
+                auto op = token.value;
                 nextToken();
                 auto e2 = parseAddExp();
-                e = new EqualExp(TOK.NOTEQUAL, e, e2);
+                e = new CmpExp(op, e, e2);
+                continue;
+            case TOK.GREATER_THAN:
+                nextToken();
+                auto e2 = parseAddExp();
+                e = new CmpExp(TOK.LESS_THAN, e2, e);
+                continue;
+            case TOK.GREATER_OR_EQUAL:
+                nextToken();
+                auto e2 = parseAddExp();
+                e = new CmpExp(TOK.LESS_OR_EQUAL, e2, e);
                 continue;
             default:
                 break;
@@ -388,7 +397,7 @@ class Parser
     do
     {
         Expression e1, e2;
-        e1 = parseEqualExp();
+        e1 = parseCmpExp();
         switch (token.value)
         {
         case TOK.ASSIGN:
@@ -477,6 +486,7 @@ class Parser
                 Expression exp;
                 nextToken();
                 exp = token.value == TOK.SEMICOLON ? null : parseAssignExp();
+                assert(token.value == TOK.SEMICOLON);
                 return new ReturnStatement(exp);
             case TOK.LEFTPARENT:
             case TOK.RIGHTPARENT:
