@@ -400,7 +400,8 @@ class Visitor
         {
             (cast(UnaryExp) e.e1).accept(this);
         }
-        else if (e.e1.op == TOK.EQUAL || e.e1.op == TOK.NOTEQUAL)
+        else if (e.e1.op == TOK.EQUAL || e.e1.op == TOK.NOTEQUAL
+                || e.e1.op == TOK.LESS_THAN || e.e1.op == TOK.LESS_OR_EQUAL)
         {
             (cast(CmpExp) e.e1).accept(this);
         }
@@ -437,7 +438,8 @@ class Visitor
         {
             (cast(UnaryExp) e.e2).accept(this);
         }
-        else if (e.e2.op == TOK.EQUAL || e.e2.op == TOK.NOTEQUAL)
+        else if (e.e2.op == TOK.EQUAL || e.e2.op == TOK.NOTEQUAL
+                || e.e2.op == TOK.LESS_THAN || e.e2.op == TOK.LESS_OR_EQUAL)
         {
             (cast(CmpExp) e.e1).accept(this);
         }
@@ -517,7 +519,8 @@ class Visitor
             {
                 (cast(UnaryExp) e.e2).accept(this);
             }
-            else if (e.e2.op == TOK.EQUAL || e.e2.op == TOK.NOTEQUAL)
+            else if (e.e2.op == TOK.EQUAL || e.e2.op == TOK.NOTEQUAL
+                || e.e2.op == TOK.LESS_THAN || e.e2.op == TOK.LESS_OR_EQUAL)
             {
                 (cast(CmpExp) e.e1).accept(this);
             }
